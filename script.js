@@ -1,5 +1,11 @@
 const API_URL_ALL = 'https://akabab.github.io/superhero-api/api/all.json';
 const API_URL_ID = 'https://akabab.github.io/superhero-api/api/id/';
+const heroe = document.querySelector('#heroe-list');
+const opponent = document.querySelector('#opponent-list');
+const heroeUl = document.getElementById('heroe-ul');
+const opponentUl = document.getElementById('opponent-ul');
+const heroePhoto = document.querySelector('#heroe-photo');
+const opponentPhoto = document.querySelector('#opponent-photo');
 
 const fetchHeroesInfos = async (url) => {
   try {
@@ -58,10 +64,7 @@ const getHeroeStats = async (heroe) => {
     const heroeId = ids.find((id) => id[heroe])[heroe];
     const infos = await fetchHeroesInfos(`${API_URL_ID}${heroeId}.json`);
     const stats = infos.powerstats;
-    // console.log(stats);
     return stats;
-    const imgXsUrl = infos.images.xs;
-    // console.log(infos);
   } catch (error) {
     alert('Selecione um herói');
   }
@@ -72,11 +75,20 @@ const getHeroePhoto = async (heroe) => {
     const ids = await getHeroesIds();
     const heroeId = ids.find((id) => id[heroe])[heroe];
     const infos = await fetchHeroesInfos(`${API_URL_ID}${heroeId}.json`);
-    // const stats = infos.powerstats;
-    // console.log(stats);
     const imgXsUrl = infos.images.sm;
     return imgXsUrl;
-    // console.log(infos);
+  } catch (error) {
+    alert('Selecione um herói');
+  }
+}
+
+const getHeroeBio = async (heroe) => {
+  try {
+    const ids = await getHeroesIds();
+    const heroeId = ids.find((id) => id[heroe])[heroe];
+    const infos = await fetchHeroesInfos(`${API_URL_ID}${heroeId}.json`);
+    const bio = infos.biography;
+    return bio;
   } catch (error) {
     alert('Selecione um herói');
   }
@@ -84,19 +96,13 @@ const getHeroePhoto = async (heroe) => {
 
 const showStats = async () => {
   const btnStats = document.getElementById('stats');
-  const heroe = document.querySelector('#heroe-list');
-  const opponent = document.querySelector('#opponent-list');
-  const heroePhoto = document.querySelector('#heroe-photo');
-  const opponentPhoto = document.querySelector('#opponent-photo');
   btnStats.addEventListener('click', async () => {
     const heroeURL = await getHeroePhoto(heroe.value);
     const opponentURL = await getHeroePhoto(opponent.value);
     const heroeStats = await getHeroeStats(heroe.value);
     const opponentStats = await getHeroeStats(opponent.value);
     const keys = Object.keys(heroeStats);
-    const heroeUl = document.getElementById('heroe-ul');
     heroeUl.innerText = '';
-    const opponentUl = document.getElementById('opponent-ul');
     opponentUl.innerText = '';
     for (key of keys) {
       const liHeroe = document.createElement('li');
@@ -110,7 +116,33 @@ const showStats = async () => {
     opponentPhoto.src = opponentURL;
   })
 }
+
+const showInfo = () => {
+  const btnInfo = document.getElementById('info');
+  const heroeP = document.querySelector('#heroe-p');
+  const opponentP = document.querySelector('#heroe-p');
+  btnInfo.addEventListener('click', async () => {
+    const heroeInfo = await getHeroeBio(heroe.value);
+    const opponentInfo = await getHeroeBio(opponent.value);
+    const heroeURL = await getHeroePhoto(heroe.value);
+    const opponentURL = await getHeroePhoto(opponent.value);
+    const keys = Object.keys(heroeInfo);
+    heroeUl.innerText = '';
+    opponentUl.innerText = '';
+    for (key of keys) {
+      const liHeroe = document.createElement('li');
+      const liOpponent = document.createElement('li');
+      liHeroe.innerText = `${key} : ${heroeInfo[key]}`;
+      liOpponent.innerText = `${key} : ${opponentInfo[key]}`;
+      heroeUl.appendChild(liHeroe);
+      opponentUl.appendChild(liOpponent);
+    }
+    heroePhoto.src = heroeURL;
+    opponentPhoto.src = opponentURL;
+  });
+}
 window.onload = () => {
   appendNamesOnSelect();
   showStats();
+  showInfo();
 }
