@@ -6,6 +6,8 @@ const heroeUl = document.getElementById('heroe-ul');
 const opponentUl = document.getElementById('opponent-ul');
 const heroePhoto = document.querySelector('#heroe-photo');
 const opponentPhoto = document.querySelector('#opponent-photo');
+const heroeP = document.querySelector('#heroe-p');
+const opponentP = document.querySelector('#opponent-p');
 
 const fetchHeroesInfos = async (url) => {
   try {
@@ -97,6 +99,8 @@ const getHeroeBio = async (heroe) => {
 const showStats = async () => {
   const btnStats = document.getElementById('stats');
   btnStats.addEventListener('click', async () => {
+    heroeP.classList.replace('active', 'inactive');
+    opponentP.classList.replace('active', 'inactive');
     const heroeURL = await getHeroePhoto(heroe.value);
     const opponentURL = await getHeroePhoto(opponent.value);
     const heroeStats = await getHeroeStats(heroe.value);
@@ -112,6 +116,8 @@ const showStats = async () => {
       heroeUl.appendChild(liHeroe);
       opponentUl.appendChild(liOpponent);
     }
+    heroePhoto.classList.replace('inactive', 'active');
+    opponentPhoto.classList.replace('inactive', 'active');
     heroePhoto.src = heroeURL;
     opponentPhoto.src = opponentURL;
   })
@@ -119,9 +125,9 @@ const showStats = async () => {
 
 const showInfo = () => {
   const btnInfo = document.getElementById('info');
-  const heroeP = document.querySelector('#heroe-p');
-  const opponentP = document.querySelector('#heroe-p');
   btnInfo.addEventListener('click', async () => {
+    heroeP.classList.replace('active', 'inactive');
+    opponentP.classList.replace('active', 'inactive');
     const heroeInfo = await getHeroeBio(heroe.value);
     const opponentInfo = await getHeroeBio(opponent.value);
     const heroeURL = await getHeroePhoto(heroe.value);
@@ -137,12 +143,53 @@ const showInfo = () => {
       heroeUl.appendChild(liHeroe);
       opponentUl.appendChild(liOpponent);
     }
+    heroePhoto.classList.replace('inactive', 'active');
+    opponentPhoto.classList.replace('inactive', 'active');
     heroePhoto.src = heroeURL;
     opponentPhoto.src = opponentURL;
+  });
+}
+
+const heroeWins = (url) => {
+  heroePhoto.classList.replace('inactive', 'active');
+  heroePhoto.src = url;
+  heroeP.classList.replace('inactive', 'active');
+};
+
+const opponentWins = (url) => {
+  opponentPhoto.classList.replace('inactive', 'active');
+  opponentPhoto.src = url;
+  opponentP.classList.replace('inactive', 'active');
+};
+
+const fight = () => {
+  const fightBtn = document.getElementById('fight');
+  fightBtn.addEventListener('click', async () => {
+    heroeP.classList.replace('active', 'inactive');
+    opponentP.classList.replace('active', 'inactive');
+    const heroeURL = await getHeroePhoto(heroe.value);
+    const opponentURL = await getHeroePhoto(opponent.value);
+    const heroeStats = await getHeroeStats(heroe.value);
+    const opponentStats = await getHeroeStats(opponent.value);
+    const statsKeys = Object.keys(heroeStats);
+    heroeUl.innerText = '';
+    opponentUl.innerText = '';
+    heroePhoto.src = '';
+    opponentPhoto.src = '';
+    let somaHeroe = 0;
+    let somaOpponent = 0;
+    for (key of statsKeys) {
+      somaHeroe += heroeStats[key];
+      somaOpponent += opponentStats[key];
+    }
+    if (somaHeroe === somaOpponent) alert('Escolha um heroi diferente')
+    if (somaHeroe > somaOpponent) heroeWins(heroeURL);
+    if (somaOpponent > somaHeroe) opponentWins(opponentURL);
   });
 }
 window.onload = () => {
   appendNamesOnSelect();
   showStats();
   showInfo();
+  fight();
 }
