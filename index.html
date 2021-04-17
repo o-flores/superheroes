@@ -6,26 +6,66 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/node_modules/bulma/css/bulma.min.css">
-  <script src="https://kit.fontawesome.com/2ddcb6346f.js" crossorigin="anonymous"></script>
+  <!-- <script src="https://kit.fontawesome.com/2ddcb6346f.js" crossorigin="anonymous"></script> -->
+  <link rel="stylesheet" href="style.css">
   <title>Super Heroes</title>
 </head>
 
 <body>
-  <nav>
-    <div class="tabs is-centered">
-      <ul>
-        <li class="is-active"><a>Stats</a></li>
-        <li><a>Info</a></li>
-        <li><a>Fight</a></li>
-      </ul>
-    </div>
-  </nav>
-  <div>Escolha seu herói</div>
-  <div class="select is-link">
-    <select id="heroes-list">
 
-    </select>
+  <div class="tabs is-centered">
+    <ul>
+      <li id="stats"><a>Stats</a></li>
+      <li id="info"><a>Info</a></li>
+      <li is="fight"><a>Fight!</a></li>
+    </ul>
   </div>
+
+  <div class="tile is-ancestor">
+    <div class="field tile">
+      <div class="title is-5">Escolha seu herói</div>
+      <div class="select is-link is-rounded">
+        <select id="heroe-list" class="heroes-list">
+          <option>Selecione</option>
+        </select>
+      </div>
+    </div>
+    <div class="field tile">
+      <div class="title is-5">Escolha seu oponente</div>
+      <div class="select is-danger is-rounded">
+        <select id="opponent-list" class="heroes-list">
+          <option>Selecione</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="tile is-ancestor">
+    <div class="tile">
+      <div class="content">
+        <p id='heroe-p'></p>
+        <ul id="heroe-ul"></ul>
+      </div>
+    </div>
+    <div class="tile">
+      <figure class="tile" class="image">
+        <img class="is-rounded" id="heroe-photo">
+      </figure>
+    </div>
+    <div class="tile">
+      <div class="content">
+        <p id='opponent-p'></p>
+        <ul id="opponent-ul"></ul>
+      </div>
+    </div>
+    <div class="tile">
+      <figure class="tile" class="image">
+        <img class="is-rounded" id="opponent-photo">
+      </figure>
+    </div>
+  </div>
+
+
 
 
 
