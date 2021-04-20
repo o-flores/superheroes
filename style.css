@@ -1,7 +1,8 @@
-body {
-  height: 800px;
-  background-color:  #363945;
-  color: aliceblue;
+body, html {
+  height: 100vh;
+  background-color:  #2F4F4F;
+  opacity: 0.85;
+  overflow: hidden;
 }
 
 .tabs {
@@ -11,15 +12,15 @@ body {
 }
 
 .tabs a {
-  color: grey;
+  color: #d5dade;
 }
 
 .tabs a:hover {
-  color: aliceblue;
+  color: #5c5e63;
 }
 
 .title { 
-  color: aliceblue;
+  color: #d5dade;
 }
 .field {
   margin-left: 20px;
@@ -30,22 +31,18 @@ select {
 }
 
 .select select {
-  background-color: #363945;
-  color: aliceblue;
-}
-
-option {
-  background-color: #363945;
-  color: aliceblue;
+  background-color: #322926;
+  color: #d5dade;
 }
 
 li {
   margin-left: 30px;
+  color: #d5dade;
 }
 
 img {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 250px;
+  max-height: 250px;
   border-radius: 50%;
 }
 
@@ -67,7 +64,7 @@ p {
 .title.is-4 {
   font-size: 25px;
   text-decoration: underline;
-  color: rgb(20, 20, 20);
+  color: #FAEBD7;
   margin-left: 5px;
 }
 
@@ -75,6 +72,19 @@ p {
   animation-name: win;
   animation-duration: 2s;
   animation-fill-mode: backwards;
+}
+
+.circles li {
+  position: absolute;
+  display: block;
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  background-color: #F08080;
+  /* bottom: -100px; */
+  /* left: 50%; */
+  animation: up infinite alternate;
+  z-index: -1;
 }
 
 @keyframes win {
@@ -92,5 +102,19 @@ p {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes up {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-800px) translateX(-300px);
   }
 }

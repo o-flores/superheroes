@@ -101,8 +101,8 @@ const showStats = async () => {
   btnStats.addEventListener('click', async () => {
     heroePhoto.classList.replace('active', 'inactive');
     opponentPhoto.classList.replace('active', 'inactive');
-    heroeP.classList.replace('active', 'inactive');
-    opponentP.classList.replace('active', 'inactive');
+    heroeP.classList.replace('winner', 'inactive');
+    opponentP.classList.replace('winner', 'inactive');
     const heroeURL = await getHeroePhoto(heroe.value);
     const opponentURL = await getHeroePhoto(opponent.value);
     const heroeStats = await getHeroeStats(heroe.value);
@@ -130,8 +130,8 @@ const showInfo = () => {
   btnInfo.addEventListener('click', async () => {
     heroePhoto.classList.replace('active', 'inactive');
     opponentPhoto.classList.replace('active', 'inactive');
-    heroeP.classList.replace('active', 'inactive');
-    opponentP.classList.replace('active', 'inactive');
+    heroeP.classList.replace('winner', 'inactive');
+    opponentP.classList.replace('winner', 'inactive');
     const heroeInfo = await getHeroeBio(heroe.value);
     const opponentInfo = await getHeroeBio(opponent.value);
     const heroeURL = await getHeroePhoto(heroe.value);
@@ -155,16 +155,20 @@ const showInfo = () => {
 }
 
 const heroeWins = (url) => {
+  heroeP.classList.add('inactive');
+  heroeP.classList.remove('winner');
   heroePhoto.classList.replace('inactive', 'active');
   heroePhoto.src = url;
-  heroeP.classList.replace('inactive', 'active');
+  heroeP.classList.remove('inactive');
   heroeP.classList.add('winner');
 };
 
 const opponentWins = (url) => {
+  opponentP.classList.add('inactive');
+  opponentP.classList.remove('winner');
   opponentPhoto.classList.replace('inactive', 'active');
   opponentPhoto.src = url;
-  opponentP.classList.replace('inactive', 'active');
+  opponentP.classList.remove('inactive');
   opponentP.classList.add('winner');
 };
 
@@ -193,9 +197,40 @@ const fight = () => {
     if (somaOpponent > somaHeroe) opponentWins(opponentURL);
   });
 }
+
+const randomCircles = () => {
+  const ul = document.querySelector('.circles');
+  for (let i = 0; i < 15; i += 1) {
+    const li = document.createElement('li');
+
+    const random = (min, max) => Math.random() * (max - min) + min;
+
+    const radius = random(30, 100);
+    const duration = random(10, 50);
+    const delay = random(0.1, 5);
+    const position = random(1, 95);
+
+    li.style.height = `${radius}px`;
+    li.style.width = `${radius}px`;
+    li.style.bottom = `-${radius}px`;
+
+    li.style.left = `${position}%`;
+
+    li.style.animationDuration = `${duration}s`;
+
+    li.style.animationDelay = `${delay}s`;
+
+    li.style.animationTimingFunction = `cubic-bezier(${Math.random()}, ${Math.random()}, ${Math.random()}, ${Math.random()})`;
+
+    ul.appendChild(li);
+  }
+};
+
+
 window.onload = () => {
   appendNamesOnSelect();
   showStats();
   showInfo();
   fight();
+  randomCircles();
 }
