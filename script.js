@@ -99,6 +99,8 @@ const getHeroeBio = async (heroe) => {
 const showStats = async () => {
   const btnStats = document.getElementById('stats');
   btnStats.addEventListener('click', async () => {
+    heroePhoto.classList.replace('active', 'inactive');
+    opponentPhoto.classList.replace('active', 'inactive');
     heroeP.classList.replace('active', 'inactive');
     opponentP.classList.replace('active', 'inactive');
     const heroeURL = await getHeroePhoto(heroe.value);
@@ -126,6 +128,8 @@ const showStats = async () => {
 const showInfo = () => {
   const btnInfo = document.getElementById('info');
   btnInfo.addEventListener('click', async () => {
+    heroePhoto.classList.replace('active', 'inactive');
+    opponentPhoto.classList.replace('active', 'inactive');
     heroeP.classList.replace('active', 'inactive');
     opponentP.classList.replace('active', 'inactive');
     const heroeInfo = await getHeroeBio(heroe.value);
@@ -154,12 +158,14 @@ const heroeWins = (url) => {
   heroePhoto.classList.replace('inactive', 'active');
   heroePhoto.src = url;
   heroeP.classList.replace('inactive', 'active');
+  heroeP.classList.add('winner');
 };
 
 const opponentWins = (url) => {
   opponentPhoto.classList.replace('inactive', 'active');
   opponentPhoto.src = url;
   opponentP.classList.replace('inactive', 'active');
+  opponentP.classList.add('winner');
 };
 
 const fight = () => {

@@ -1,0 +1,96 @@
+body {
+  height: 800px;
+  background-color:  #363945;
+  color: aliceblue;
+}
+
+.tabs {
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.tabs a {
+  color: grey;
+}
+
+.tabs a:hover {
+  color: aliceblue;
+}
+
+.title { 
+  color: aliceblue;
+}
+.field {
+  margin-left: 20px;
+}
+
+select {
+  margin-left: 25px;
+}
+
+.select select {
+  background-color: #363945;
+  color: aliceblue;
+}
+
+option {
+  background-color: #363945;
+  color: aliceblue;
+}
+
+li {
+  margin-left: 30px;
+}
+
+img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 50%;
+}
+
+p {
+  margin-top: 100px;
+  margin-left: 20px;
+}
+
+.inactive {
+  visibility: hidden;
+}
+
+.active {
+  animation-name: appear;
+  animation-duration: 4s;
+  animation-fill-mode: backwards;
+}
+
+.title.is-4 {
+  font-size: 25px;
+  text-decoration: underline;
+  color: rgb(20, 20, 20);
+  margin-left: 5px;
+}
+
+.winner {
+  animation-name: win;
+  animation-duration: 2s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes win {
+  from {
+    font-size: 0;
+  }
+  to {
+    font-size: 25;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
