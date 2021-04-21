@@ -1,7 +1,7 @@
 const API_URL_ALL = 'https://akabab.github.io/superhero-api/api/all.json';
 const API_URL_ID = 'https://akabab.github.io/superhero-api/api/id/';
-const heroe = document.querySelector('#heroe-list');
-const opponent = document.querySelector('#opponent-list');
+const heroeList = document.querySelector('#heroe-list');
+const vilainList = document.querySelector('#vilain-list');
 const heroeUl = document.getElementById('heroe-ul');
 const opponentUl = document.getElementById('opponent-ul');
 const heroePhoto = document.querySelector('#heroe-photo');
@@ -19,9 +19,11 @@ const fetchHeroesInfos = async (url) => {
   }
 }
 
-const getHeroesNames = async () => {
+const getHeroesNamesByAlingment = async (alignment) => {
   const heroes = await fetchHeroesInfos(API_URL_ALL);
-  const names = heroes.map((heroe) => heroe.name);
+  const names = heroes
+    .filter((heroe) => heroe.biography.alignment === alignment)
+    .map((heroe) => heroe.name);
   return names;
 };
 
@@ -36,18 +38,31 @@ const getHeroesIds = async () => {
   return ids;
 };
 
-const appendNamesOnSelect = async () => {
-  const namesArray = await getHeroesNames();
-  const selects = document.querySelectorAll('.heroes-list');
-  namesArray.forEach((name) => {
-    selects.forEach((select) => {
+const appendHeroesNames = (array) => {
+  array.forEach((name) => {
       const option = document.createElement('option');
       option.innerText = name;
       option.value = name;
-      select.appendChild(option);
-    })
+      heroeList.appendChild(option);
   });
-  // getSelectedHeroe();
+}
+
+const appendVilainsNames = (array) => {
+  array.forEach((name) => {
+      const option = document.createElement('option');
+      option.innerText = name;
+      option.value = name;
+      vilainList.appendChild(option);
+  });
+}
+
+const appendNamesOnSelect = async () => {
+  const heroesNames = await getHeroesNamesByAlingment('good');
+  const vilainsNames = await getHeroesNamesByAlingment('bad');
+
+  appendHeroesNames(heroesNames);
+  appendVilainsNames(vilainsNames);
+  
 }
 
 const getSelectedHeroe = () => {
@@ -103,10 +118,10 @@ const showStats = async () => {
     opponentPhoto.classList.replace('active', 'inactive');
     heroeP.classList.replace('winner', 'inactive');
     opponentP.classList.replace('winner', 'inactive');
-    const heroeURL = await getHeroePhoto(heroe.value);
-    const opponentURL = await getHeroePhoto(opponent.value);
-    const heroeStats = await getHeroeStats(heroe.value);
-    const opponentStats = await getHeroeStats(opponent.value);
+    const heroeURL = await getHeroePhoto(heroeList.value);
+    const opponentURL = await getHeroePhoto(vilainList.value);
+    const heroeStats = await getHeroeStats(heroeList.value);
+    const opponentStats = await getHeroeStats(vilainList.value);
     const keys = Object.keys(heroeStats);
     heroeUl.innerText = '';
     opponentUl.innerText = '';
@@ -132,10 +147,10 @@ const showInfo = () => {
     opponentPhoto.classList.replace('active', 'inactive');
     heroeP.classList.replace('winner', 'inactive');
     opponentP.classList.replace('winner', 'inactive');
-    const heroeInfo = await getHeroeBio(heroe.value);
-    const opponentInfo = await getHeroeBio(opponent.value);
-    const heroeURL = await getHeroePhoto(heroe.value);
-    const opponentURL = await getHeroePhoto(opponent.value);
+    const heroeInfo = await getHeroeBio(heroeList.value);
+    const opponentInfo = await getHeroeBio(vilainList.value);
+    const heroeURL = await getHeroePhoto(heroeList.value);
+    const opponentURL = await getHeroePhoto(vilainList.value);
     const keys = Object.keys(heroeInfo);
     heroeUl.innerText = '';
     opponentUl.innerText = '';
@@ -177,10 +192,10 @@ const fight = () => {
   fightBtn.addEventListener('click', async () => {
     heroeP.classList.replace('winner', 'inactive');
     opponentP.classList.replace('winner', 'inactive');
-    const heroeURL = await getHeroePhoto(heroe.value);
-    const opponentURL = await getHeroePhoto(opponent.value);
-    const heroeStats = await getHeroeStats(heroe.value);
-    const opponentStats = await getHeroeStats(opponent.value);
+    const heroeURL = await getHeroePhoto(heroeList.value);
+    const opponentURL = await getHeroePhoto(vilainList.value);
+    const heroeStats = await getHeroeStats(heroeList.value);
+    const opponentStats = await getHeroeStats(vilainList.value);
     const statsKeys = Object.keys(heroeStats);
     heroeUl.innerText = '';
     opponentUl.innerText = '';
