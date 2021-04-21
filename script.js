@@ -175,8 +175,8 @@ const opponentWins = (url) => {
 const fight = () => {
   const fightBtn = document.getElementById('fight');
   fightBtn.addEventListener('click', async () => {
-    heroeP.classList.replace('active', 'inactive');
-    opponentP.classList.replace('active', 'inactive');
+    heroeP.classList.replace('winner', 'inactive');
+    opponentP.classList.replace('winner', 'inactive');
     const heroeURL = await getHeroePhoto(heroe.value);
     const opponentURL = await getHeroePhoto(opponent.value);
     const heroeStats = await getHeroeStats(heroe.value);
