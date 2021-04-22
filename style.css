@@ -3,7 +3,6 @@ body, html {
   opacity: 0.9;
   overflow: hidden;
   background-color: #F7F8FA;
-  /* background-image: url('/imgs/black_background.jpg'); */
   background-size:cover;
 }
 
